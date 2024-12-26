@@ -1,4 +1,5 @@
 import reflex as rx
+import os
 
 class State(rx.State):
     count: int = 0
@@ -22,3 +23,6 @@ def func3():
 
 app = rx.App()
 app.add_page(index)
+
+if __name__ == "__main__":
+    os.system("reflex run")
