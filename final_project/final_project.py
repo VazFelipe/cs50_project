@@ -23,5 +23,5 @@ def func3():
 app = rx.App()
 app.add_page(index)
 
-# Adicione esta linha para iniciar o aplicativo 
-app.run()
+# Adicione esta linha para iniciar o aplicativo
+app._compile()
