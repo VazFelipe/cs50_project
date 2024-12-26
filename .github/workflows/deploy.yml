@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Nome da branch que você está usando
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        pytest test_project.py
+
+    - name: Export project
+      run: |
+        reflex export --zip-dest-dir=exported_project
+
+    - name: List files
+      run: |
+        ls -l exported_project
+
+    - name: Unzip exported project
+      run: |
+        unzip exported_project/frontend.zip -d build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build  # Diretório onde o projeto é descompactado
+
+    - name: Display GitHub Pages URL
+      run: |
+        echo "Your site is published at: https://${{ github.repository_owner }}.github.io/${{ github.repository }}/"
