@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # Nome da branch que você está usando
+      - main #Nome da branch que você está usando
 
 jobs:
   build:
